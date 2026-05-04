@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Chat Italia Xatframe - HD 30s</title>
+    <title>Chat Italia Xatframe - HD Pro</title>
     <style>
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; }
 
@@ -26,6 +26,14 @@
         }
 
         .slide.active { opacity: 1; }
+
+        /* Effetto particelle */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+        }
 
         .overlay {
             position: fixed;
@@ -51,68 +59,103 @@
         }
 
         .header-text {
-            font-size: 55px;
+            font-size: 50px;
             font-weight: bold;
-            text-shadow: 3px 3px 12px rgba(0,0,0,0.9);
-            margin-top: 15px;
+            text-shadow: 3px 3px 12px rgba(0,0,0,1);
+            margin-top: 10px;
         }
 
         .italy-map {
             position: absolute;
-            left: 40px;
+            left: 30px;
             top: 50%;
             transform: translateY(-50%);
-            width: 160px;
+            width: 140px;
             z-index: 11;
-            filter: drop-shadow(0 0 15px rgba(255,255,255,0.7));
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.6));
         }
 
         .frame-area {
             width: 728px;
             height: 486px;
-            border: 5px solid rgba(255, 255, 255, 0.5);
+            border: 4px solid rgba(255, 255, 255, 0.5);
             box-shadow: 0 0 40px rgba(0,0,0,0.8);
             background: transparent;
         }
 
-        .info-panel {
+        /* Player Radio RDS */
+        .radio-player {
             position: absolute;
-            right: 40px;
-            top: 50%;
-            transform: translateY(-50%);
+            right: 30px;
+            bottom: 30px;
             background: rgba(0, 0, 0, 0.8);
-            padding: 25px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.3);
-            text-align: center;
-            backdrop-filter: blur(12px);
-            z-index: 11;
+            padding: 15px;
+            border-radius: 50px;
+            border: 2px solid #ed1c24;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 20;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(237, 28, 36, 0.4);
         }
 
-        .clock { font-size: 42px; font-weight: bold; color: #4CAF50; }
-        .date { font-size: 20px; margin-top: 8px; color: #FFEB3B; }
+        .radio-btn {
+            width: 45px;
+            height: 45px;
+            background: #ed1c24;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .radio-btn:hover { transform: scale(1.1); }
+        .radio-label { font-size: 14px; font-weight: bold; padding-right: 10px; }
+
+        .info-panel {
+            position: absolute;
+            right: 30px;
+            top: 40%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+            z-index: 11;
+            min-width: 160px;
+        }
+
+        .clock { font-size: 38px; font-weight: bold; color: #4CAF50; }
+        .date { font-size: 18px; margin-top: 5px; color: #FFEB3B; }
 
         .nav-container {
             display: flex;
-            gap: 40px;
-            margin-bottom: 25px;
+            gap: 30px;
+            margin-bottom: 20px;
         }
 
         .nav-item {
-            padding: 12px 35px;
-            border-radius: 12px;
+            padding: 10px 25px;
+            border-radius: 8px;
             background: linear-gradient(to right, #008C45, #FFFFFF, #CD212A);
             color: black;
-            font-size: 26px;
+            font-size: 22px;
             font-weight: bold;
             border: 2px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.6);
         }
     </style>
 </head>
 <body>
     <div id="slideshow-container"></div>
     <div class="overlay"></div>
+    <div id="particles-js"></div>
     
     <div class="content">
         <div class="header-text">Chat Italia</div>
@@ -132,6 +175,14 @@
         </div>
     </div>
 
+    <!-- Player Radio -->
+    <div class="radio-player">
+        <button class="radio-btn" id="playBtn">▶</button>
+        <span class="radio-label">RDS 100% Grandi Successi</span>
+        <audio id="audioSource" src="https://rds-r3.streamakaci.com/rds.mp3"></audio>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         const dayImages = [
             'https://images.unsplash.com/photo-1552832230-c0197dd3ef1b?w=1600', // Colosseo
@@ -153,7 +204,6 @@
             const isDay = hour >= 6 && hour < 19;
             const images = isDay ? dayImages : nightImages;
             const container = document.getElementById('slideshow-container');
-            
             container.innerHTML = '';
             slides = images.map((src, index) => {
                 const div = document.createElement('div');
@@ -175,12 +225,37 @@
             const now = new Date();
             document.getElementById('clock').textContent = now.toLocaleTimeString('it-IT');
             document.getElementById('date').textContent = now.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
-            if (now.getMinutes() === 0 && now.getSeconds() === 0) initSlideshow();
         }
+
+        // Radio Logic
+        const audio = document.getElementById('audioSource');
+        const playBtn = document.getElementById('playBtn');
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = '⏸';
+            } else {
+                audio.pause();
+                playBtn.textContent = '▶';
+            }
+        });
+
+        // Particles config
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 40, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#ffffff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.3, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": false },
+                "move": { "enable": true, "speed": 1, "direction": "top", "random": true, "out_mode": "out" }
+            }
+        });
 
         initSlideshow();
         setInterval(updateTime, 1000);
-        setInterval(rotateSlides, 30000); // 30 secondi per ogni foto
+        setInterval(rotateSlides, 30000);
         updateTime();
     </script>
 </body>
