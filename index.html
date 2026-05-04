@@ -2,8 +2,16 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Chat Italia Xatframe - Dance Edition</title>
+    <title>Chat Italia Xatframe - Secured</title>
     <style>
+        /* Protezione copia e selezione */
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: white; }
 
         /* Slideshow Sfondo Generale */
@@ -198,9 +206,21 @@
             border: 2px solid white;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
         }
+
+        /* Firma xDany81 */
+        .signature {
+            position: fixed;
+            bottom: 10px;
+            right: 15px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+            z-index: 30;
+            text-shadow: 0 0 5px black;
+        }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
     <div id="slideshow-container"></div>
     <div class="overlay"></div>
     <div id="particles-js"></div>
@@ -239,8 +259,19 @@
         </div>
     </div>
 
+    <div class="signature">Created by xDany81</div>
+
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // Disabilita tasti F12, Ctrl+Shift+I, Ctrl+U
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) return false;
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+        };
+
         const dayImages = [
             'https://images.unsplash.com/photo-1552832230-c0197dd3ef1b?w=1600', 
             'https://images.unsplash.com/photo-1541432901042-2dad8a167759?w=1600',
