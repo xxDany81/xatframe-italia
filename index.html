@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Chat Italia Xatframe - Final Build</title>
+    <title>Chat Italia Xatframe - Final Alignment</title>
     <style>
         /* Protezione copia */
         * {
@@ -67,17 +67,18 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            pointer-events: none; /* Lascia passare i clic alla chat */
+            pointer-events: none;
         }
 
         .middle-container {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             width: 100%;
             height: 100%;
-            padding: 0 40px;
+            padding: 0 20px;
             pointer-events: none;
+            margin-top: -30px; /* Alza tutto il blocco centrale */
         }
 
         /* Pannelli Laterali */
@@ -108,11 +109,11 @@
 
         @keyframes neonBlink { from { opacity: 1; } to { opacity: 0.7; } }
 
-        /* Riquadro Centrale */
+        /* Riquadro Centrale - MISURE RICHIESTE 847x675 */
         .neon-frame-wrapper {
             position: relative;
-            width: 850px;
-            height: 600px;
+            width: 847px;
+            height: 675px;
             padding: 5px;
             display: flex;
             align-items: center;
@@ -120,6 +121,7 @@
             overflow: hidden;
             border-radius: 10px;
             pointer-events: none;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
         }
 
         .neon-frame-wrapper::before {
@@ -188,7 +190,7 @@
 
         .radio-text { font-size: 12px; font-weight: bold; color: #00ffff; }
 
-        /* Bottoni */
+        /* Bottoni Navigazione */
         .nav-item {
             padding: 12px 30px;
             border-radius: 10px;
@@ -201,11 +203,12 @@
             pointer-events: auto !important;
             text-align: center;
             width: 220px;
+            z-index: 999999;
         }
 
         .signature {
             position: fixed;
-            bottom: 60px;
+            bottom: 30px;
             right: 25px;
             font-size: 12px;
             color: rgba(255, 255, 255, 0.4);
@@ -224,10 +227,10 @@
                 <div class="neon-italia">
                     <span>ITA</span><span>L</span><span>IA</span>
                 </div>
-                <!-- Lobby Button -->
                 <div class="nav-item" onclick="window.open('https://xat.com/italia', '_blank')">Lobby</div>
             </div>
             
+            <!-- Cornice Neon 847x675 -->
             <div class="neon-frame-wrapper">
                 <div class="frame-area"></div>
             </div>
@@ -246,7 +249,6 @@
                     </audio>
                 </div>
 
-                <!-- Aiuto Ufficiale Button -->
                 <div class="nav-item" onclick="window.open('https://xat.com/italia', '_blank')">Aiuto Ufficiale</div>
             </div>
         </div>
