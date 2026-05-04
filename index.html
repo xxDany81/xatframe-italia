@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Chat Italia Xatframe - Stabilizzato</title>
+    <title>Chat Italia Xatframe - Neon Edition</title>
     <style>
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: white; }
 
@@ -38,7 +38,6 @@
             z-index: 2;
         }
 
-        /* Particelle fluttuanti */
         #particles-js {
             position: fixed;
             width: 100%;
@@ -78,7 +77,7 @@
         }
 
         .side-panel {
-            width: 180px;
+            width: 200px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -86,10 +85,27 @@
             z-index: 15;
         }
 
-        .italy-map {
-            width: 130px;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.6));
-            transition: transform 0.3s;
+        /* Logo Xat Neon Lampeggiante */
+        .neon-xat {
+            width: 120px;
+            filter: drop-shadow(0 0 10px #ff00ff);
+            animation: blink 1.5s infinite alternate;
+        }
+
+        .neon-subtext {
+            font-size: 28px;
+            font-weight: bold;
+            color: #00ffff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 10px;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+            animation: blink 2s infinite alternate-reverse;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; filter: brightness(1.2) drop-shadow(0 0 15px currentColor); }
+            50% { opacity: 0.7; filter: brightness(0.8) drop-shadow(0 0 5px currentColor); }
         }
 
         .frame-area {
@@ -98,7 +114,6 @@
             border: 3px solid rgba(255, 255, 255, 0.4);
             background: rgba(255, 255, 255, 0.02);
             box-shadow: 0 0 30px rgba(0,0,0,0.8);
-            position: relative;
         }
 
         .info-box {
@@ -139,7 +154,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        /* Player Radio con link corretti */
         .radio-player {
             background: rgba(0, 0, 0, 0.85);
             padding: 10px 20px;
@@ -149,7 +163,6 @@
             align-items: center;
             gap: 12px;
             box-shadow: 0 0 20px rgba(237, 28, 36, 0.4);
-            max-width: 300px;
         }
 
         .radio-btn {
@@ -163,13 +176,7 @@
             cursor: pointer;
         }
 
-        .radio-text {
-            font-size: 12px;
-            font-weight: bold;
-            white-space: nowrap;
-            overflow: hidden;
-            max-width: 200px;
-        }
+        .radio-text { font-size: 12px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -182,7 +189,8 @@
         
         <div class="middle-container">
             <div class="side-panel">
-                <img src="https://xatimg.com/image/VD9aNV6Ef1eA.png" class="italy-map" alt="Italia">
+                <img src="https://xat.com/images/logo_xat.png" class="neon-xat" alt="xat Logo">
+                <div class="neon-subtext">ITALIA</div>
             </div>
             
             <div class="frame-area"></div>
@@ -206,7 +214,6 @@
                 <div class="radio-text">RDS 100% Grandi Successi</div>
                 <audio id="audioSource" preload="none">
                     <source src="https://rds-stream.rds.it/rds.mp3" type="audio/mpeg">
-                    <source src="https://rds.api.radiomonitor.com/stream/rds.mp3" type="audio/mpeg">
                 </audio>
             </div>
         </div>
@@ -257,12 +264,10 @@
             document.getElementById('date').textContent = now.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
         }
 
-        // Radio Logic - Migliorata
         const audio = document.getElementById('audioSource');
         const playBtn = document.getElementById('playBtn');
         playBtn.addEventListener('click', () => {
             if (audio.paused) {
-                audio.load(); // Forza il caricamento dello stream al play
                 audio.play();
                 playBtn.textContent = '⏸';
             } else {
