@@ -4,50 +4,28 @@
     <meta charset="UTF-8">
     <title>Chat Italia Xatframe</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: sans-serif; background: #000; }
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: white; }
         
-        /* Lo slideshow deve essere sopra il background del body ma sotto il resto */
-        .slideshow {
+        /* Sfondo fisso Colosseo */
+        .background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1552832230-c0197dd3ef1b?w=1600');
+            background-size: cover;
+            background-position: center;
             z-index: 1;
         }
 
-        .slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            animation: slideAnim 24s infinite linear;
-        }
-
-        /* Immagini ad alta affidabilità */
-        .slide:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1552832230-c0197dd3ef1b?w=1600'); animation-delay: 0s; }
-        .slide:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600'); animation-delay: 6s; }
-        .slide:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1600'); animation-delay: 12s; }
-        .slide:nth-child(4) { background-image: url('https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1600'); animation-delay: 18s; }
-
-        @keyframes slideAnim {
-            0% { opacity: 0; }
-            5% { opacity: 1; }
-            25% { opacity: 1; }
-            30% { opacity: 0; }
-            100% { opacity: 0; }
-        }
-
-        /* Overlay scuro per leggere meglio il testo */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.3);
             z-index: 2;
         }
 
@@ -59,62 +37,109 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 0;
+            padding: 20px;
             box-sizing: border-box;
         }
 
         .header-text {
-            color: white;
-            text-shadow: 0 0 15px rgba(255,255,255,0.8), 2px 2px 4px rgba(0,0,0,0.9);
-            font-size: 50px;
+            font-size: 55px;
             font-weight: bold;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.9), 0 0 20px rgba(255,255,255,0.4);
             margin-top: 10px;
+        }
+
+        .middle-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            width: 100%;
+        }
+
+        /* Penisola Italiana stilizzata */
+        .italy-map {
+            width: 150px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); opacity: 0.8; }
+            to { transform: scale(1.05); opacity: 1; }
         }
 
         .frame-area {
             width: 728px;
             height: 486px;
-            border: 4px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 0 25px rgba(0,0,0,0.7);
-            background: transparent;
+            border: 5px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            background: rgba(255, 255, 255, 0.05);
         }
+
+        .info-panel {
+            width: 200px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.3);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .clock { font-size: 32px; font-weight: bold; color: #4CAF50; }
+        .date { font-size: 18px; margin-top: 5px; color: #FFEB3B; }
 
         .nav-container {
             display: flex;
-            gap: 30px;
+            gap: 40px;
             margin-bottom: 20px;
         }
 
         .nav-item {
-            padding: 12px 25px;
-            border-radius: 8px;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            font-size: 24px;
+            padding: 12px 30px;
+            border-radius: 10px;
+            background: linear-gradient(145deg, rgba(0,128,0,0.8), rgba(255,255,255,0.2), rgba(255,0,0,0.8));
+            font-size: 26px;
             font-weight: bold;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
+            border: 2px solid white;
+            text-shadow: 1px 1px 3px black;
         }
     </style>
 </head>
 <body>
-    <div class="slideshow">
-        <div class="slide"></div>
-        <div class="slide"></div>
-        <div class="slide"></div>
-        <div class="slide"></div>
-    </div>
+    <div class="background"></div>
     <div class="overlay"></div>
     
     <div class="content">
         <div class="header-text">Chat Italia</div>
         
-        <div class="frame-area"></div>
+        <div class="middle-section">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Map_of_Italy_with_regions_and_provinces.svg/512px-Map_of_Italy_with_regions_and_provinces.svg.png" class="italy-map" alt="Italia">
+            
+            <div class="frame-area"></div>
+
+            <div class="info-panel">
+                <div id="clock" class="clock">00:00:00</div>
+                <div id="date" class="date">01 Gennaio 2026</div>
+            </div>
+        </div>
 
         <div class="nav-container">
             <div class="nav-item">Lobby</div>
             <div class="nav-item">Aiuto Ufficiale</div>
         </div>
     </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            
+            document.getElementById('clock').textContent = now.toLocaleTimeString('it-IT');
+            document.getElementById('date').textContent = now.toLocaleDateString('it-IT', options);
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
 </body>
 </html>
