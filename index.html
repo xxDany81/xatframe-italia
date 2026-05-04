@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Chat Italia Xatframe - Clean Edition</title>
+    <title>Chat Italia Xatframe - Neon Border Edition</title>
     <style>
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: white; }
 
@@ -55,7 +55,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px 0;
+            padding: 15px 0;
             box-sizing: border-box;
         }
 
@@ -63,7 +63,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 25px;
             width: 100%;
             flex-grow: 1;
         }
@@ -75,12 +75,12 @@
             align-items: center;
             justify-content: center;
             z-index: 15;
-            gap: 25px;
+            gap: 30px;
         }
 
-        /* Scritta ITALIA Neon Tricolore Orizzontale */
+        /* Scritta ITALIA Neon */
         .neon-italia {
-            font-size: 38px;
+            font-size: 42px;
             font-weight: 900;
             display: flex;
             flex-direction: row;
@@ -88,7 +88,6 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             animation: neonBlink 1.5s infinite alternate;
-            white-space: nowrap;
         }
 
         .neon-italia span:nth-child(1) { color: #008C45; text-shadow: 0 0 10px #008C45, 0 0 20px #008C45; }
@@ -100,26 +99,55 @@
             50% { opacity: 0.8; filter: brightness(1); }
         }
 
+        /* Riquadro Centrale con Neon Tricolore Girevole */
+        .neon-frame-wrapper {
+            position: relative;
+            width: 850px; /* Più grande */
+            height: 600px;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .neon-frame-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: conic-gradient(#008C45, #FFFFFF, #CD212A, #008C45);
+            animation: rotateNeon 4s linear infinite;
+        }
+
+        @keyframes rotateNeon {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         .frame-area {
-            width: 728px;
-            height: 486px;
-            border: 3px solid rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.01);
-            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 5;
+            border-radius: 8px;
         }
 
         .info-box {
             background: rgba(0, 0, 0, 0.8);
-            padding: 15px;
+            padding: 20px;
             border-radius: 15px;
             border: 1px solid rgba(255,255,255,0.2);
             text-align: center;
             backdrop-filter: blur(8px);
-            min-width: 170px;
+            min-width: 180px;
         }
 
-        .clock { font-size: 32px; font-weight: bold; color: #4CAF50; }
-        .date { font-size: 15px; margin-top: 5px; color: #FFEB3B; }
+        .clock { font-size: 36px; font-weight: bold; color: #4CAF50; }
+        .date { font-size: 16px; margin-top: 5px; color: #FFEB3B; }
 
         .radio-player {
             background: rgba(0, 0, 0, 0.85);
@@ -131,40 +159,38 @@
             align-items: center;
             gap: 8px;
             box-shadow: 0 0 20px rgba(237, 28, 36, 0.4);
-            width: 150px;
+            width: 160px;
         }
 
         .radio-btn {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background: #ed1c24;
             border-radius: 50%;
             border: none;
             color: white;
-            font-size: 18px;
+            font-size: 20px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .radio-text { font-size: 10px; font-weight: bold; }
+        .radio-text { font-size: 11px; font-weight: bold; }
 
         .nav-container {
             display: flex;
-            gap: 30px;
-            margin-top: 20px;
+            gap: 40px;
+            margin-top: 15px;
+            z-index: 20;
         }
 
         .nav-item {
-            padding: 8px 25px;
-            border-radius: 8px;
+            padding: 10px 30px;
+            border-radius: 10px;
             background: linear-gradient(to right, #008C45, #FFFFFF, #CD212A);
             color: #000;
-            font-size: 18px;
+            font-size: 22px;
             font-weight: bold;
             border: 2px solid white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
         }
     </style>
 </head>
@@ -181,7 +207,9 @@
                 </div>
             </div>
             
-            <div class="frame-area"></div>
+            <div class="neon-frame-wrapper">
+                <div class="frame-area"></div>
+            </div>
 
             <div class="side-panel">
                 <div class="info-box">
