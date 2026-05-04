@@ -2,10 +2,11 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Chat Italia Xatframe - HD Pro</title>
+    <title>Chat Italia Xatframe - Stabilizzato</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; }
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: white; }
 
+        /* Slideshow */
         #slideshow-container {
             position: fixed;
             top: 0;
@@ -27,14 +28,6 @@
 
         .slide.active { opacity: 1; }
 
-        /* Effetto particelle */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: 3;
-        }
-
         .overlay {
             position: fixed;
             top: 0;
@@ -45,110 +38,137 @@
             z-index: 2;
         }
 
-        .content {
+        /* Particelle fluttuanti */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .main-layout {
             position: relative;
             z-index: 10;
-            height: 100%;
+            height: 100vh;
+            width: 100vw;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 20px;
+            padding: 10px 0;
             box-sizing: border-box;
-            color: white;
         }
 
         .header-text {
-            font-size: 50px;
+            font-size: 45px;
             font-weight: bold;
-            text-shadow: 3px 3px 12px rgba(0,0,0,1);
-            margin-top: 10px;
+            text-shadow: 0 0 15px rgba(255,255,255,0.7), 3px 3px 5px black;
+            margin-top: 5px;
+            z-index: 15;
+        }
+
+        .middle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            flex-grow: 1;
+        }
+
+        .side-panel {
+            width: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 15;
         }
 
         .italy-map {
-            position: absolute;
-            left: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 140px;
-            z-index: 11;
+            width: 130px;
             filter: drop-shadow(0 0 10px rgba(255,255,255,0.6));
+            transition: transform 0.3s;
         }
 
         .frame-area {
             width: 728px;
             height: 486px;
-            border: 4px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 0 40px rgba(0,0,0,0.8);
-            background: transparent;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.02);
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            position: relative;
         }
 
-        /* Player Radio RDS */
-        .radio-player {
-            position: absolute;
-            right: 30px;
-            bottom: 30px;
+        .info-box {
             background: rgba(0, 0, 0, 0.8);
             padding: 15px;
-            border-radius: 50px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+            backdrop-filter: blur(8px);
+            min-width: 160px;
+        }
+
+        .clock { font-size: 34px; font-weight: bold; color: #4CAF50; }
+        .date { font-size: 16px; margin-top: 5px; color: #FFEB3B; }
+
+        .bottom-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 5px;
+            z-index: 15;
+        }
+
+        .nav-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-item {
+            padding: 8px 25px;
+            border-radius: 8px;
+            background: linear-gradient(to right, #008C45, #F4F5F0, #CD212A);
+            color: #000;
+            font-size: 20px;
+            font-weight: bold;
+            border: 2px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Player Radio con link corretti */
+        .radio-player {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 10px 20px;
+            border-radius: 40px;
             border: 2px solid #ed1c24;
             display: flex;
             align-items: center;
-            gap: 15px;
-            z-index: 20;
-            backdrop-filter: blur(10px);
+            gap: 12px;
             box-shadow: 0 0 20px rgba(237, 28, 36, 0.4);
+            max-width: 300px;
         }
 
         .radio-btn {
-            width: 45px;
-            height: 45px;
+            width: 35px;
+            height: 35px;
             background: #ed1c24;
             border-radius: 50%;
             border: none;
             color: white;
-            font-size: 20px;
+            font-size: 16px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s;
         }
 
-        .radio-btn:hover { transform: scale(1.1); }
-        .radio-label { font-size: 14px; font-weight: bold; padding-right: 10px; }
-
-        .info-panel {
-            position: absolute;
-            right: 30px;
-            top: 40%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.2);
-            text-align: center;
-            z-index: 11;
-            min-width: 160px;
-        }
-
-        .clock { font-size: 38px; font-weight: bold; color: #4CAF50; }
-        .date { font-size: 18px; margin-top: 5px; color: #FFEB3B; }
-
-        .nav-container {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 20px;
-        }
-
-        .nav-item {
-            padding: 10px 25px;
-            border-radius: 8px;
-            background: linear-gradient(to right, #008C45, #FFFFFF, #CD212A);
-            color: black;
-            font-size: 22px;
+        .radio-text {
+            font-size: 12px;
             font-weight: bold;
-            border: 2px solid white;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 200px;
         }
     </style>
 </head>
@@ -157,43 +177,53 @@
     <div class="overlay"></div>
     <div id="particles-js"></div>
     
-    <div class="content">
+    <div class="main-layout">
         <div class="header-text">Chat Italia</div>
         
-        <img src="https://xatimg.com/image/VD9aNV6Ef1eA.png" class="italy-map" alt="Italia">
-        
-        <div class="frame-area"></div>
+        <div class="middle-container">
+            <div class="side-panel">
+                <img src="https://xatimg.com/image/VD9aNV6Ef1eA.png" class="italy-map" alt="Italia">
+            </div>
+            
+            <div class="frame-area"></div>
 
-        <div class="info-panel">
-            <div id="clock" class="clock">00:00:00</div>
-            <div id="date" class="date">Caricamento...</div>
+            <div class="side-panel">
+                <div class="info-box">
+                    <div id="clock" class="clock">00:00:00</div>
+                    <div id="date" class="date">Caricamento...</div>
+                </div>
+            </div>
         </div>
 
-        <div class="nav-container">
-            <div class="nav-item">Lobby</div>
-            <div class="nav-item">Aiuto Ufficiale</div>
+        <div class="bottom-section">
+            <div class="nav-container">
+                <div class="nav-item">Lobby</div>
+                <div class="nav-item">Aiuto Ufficiale</div>
+            </div>
+            
+            <div class="radio-player">
+                <button class="radio-btn" id="playBtn">▶</button>
+                <div class="radio-text">RDS 100% Grandi Successi</div>
+                <audio id="audioSource" preload="none">
+                    <source src="https://rds-stream.rds.it/rds.mp3" type="audio/mpeg">
+                    <source src="https://rds.api.radiomonitor.com/stream/rds.mp3" type="audio/mpeg">
+                </audio>
+            </div>
         </div>
-    </div>
-
-    <!-- Player Radio -->
-    <div class="radio-player">
-        <button class="radio-btn" id="playBtn">▶</button>
-        <span class="radio-label">RDS 100% Grandi Successi</span>
-        <audio id="audioSource" src="https://rds-r3.streamakaci.com/rds.mp3"></audio>
     </div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         const dayImages = [
-            'https://images.unsplash.com/photo-1552832230-c0197dd3ef1b?w=1600', // Colosseo
-            'https://images.unsplash.com/photo-1541432901042-2dad8a167759?w=1600', // Firenze
-            'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1600'  // Venezia
+            'https://images.unsplash.com/photo-1552832230-c0197dd3ef1b?w=1600', 
+            'https://images.unsplash.com/photo-1541432901042-2dad8a167759?w=1600',
+            'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1600'
         ];
 
         const nightImages = [
-            'https://images.unsplash.com/photo-1512403714441-2a1f267672f7?w=1600', // Colosseo Notte
-            'https://images.unsplash.com/photo-1520116468816-95b69f847357?w=1600', // Firenze Notte
-            'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600'  // Venezia Notte
+            'https://images.unsplash.com/photo-1512403714441-2a1f267672f7?w=1600', 
+            'https://images.unsplash.com/photo-1520116468816-95b69f847357?w=1600', 
+            'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600'
         ];
 
         let slides = [];
@@ -201,7 +231,7 @@
 
         function initSlideshow() {
             const hour = new Date().getHours();
-            const isDay = hour >= 6 && hour < 19;
+            const isDay = hour >= 6 && hour < 20;
             const images = isDay ? dayImages : nightImages;
             const container = document.getElementById('slideshow-container');
             container.innerHTML = '';
@@ -227,11 +257,12 @@
             document.getElementById('date').textContent = now.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
         }
 
-        // Radio Logic
+        // Radio Logic - Migliorata
         const audio = document.getElementById('audioSource');
         const playBtn = document.getElementById('playBtn');
         playBtn.addEventListener('click', () => {
             if (audio.paused) {
+                audio.load(); // Forza il caricamento dello stream al play
                 audio.play();
                 playBtn.textContent = '⏸';
             } else {
@@ -240,16 +271,13 @@
             }
         });
 
-        // Particles config
         particlesJS('particles-js', {
             "particles": {
                 "number": { "value": 40, "density": { "enable": true, "value_area": 800 } },
                 "color": { "value": "#ffffff" },
-                "shape": { "type": "circle" },
                 "opacity": { "value": 0.3, "random": true },
-                "size": { "value": 3, "random": true },
-                "line_linked": { "enable": false },
-                "move": { "enable": true, "speed": 1, "direction": "top", "random": true, "out_mode": "out" }
+                "size": { "value": 2, "random": true },
+                "move": { "enable": true, "speed": 0.8, "direction": "top", "random": true, "out_mode": "out" }
             }
         });
 
