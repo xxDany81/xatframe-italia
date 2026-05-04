@@ -2,9 +2,9 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Chat Italia Xatframe - Final Alignment</title>
+    <title>Chat Italia Xatframe - Weather Edition</title>
     <style>
-        /* Protezione copia */
+        /* Protezione globale */
         * {
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -60,7 +60,7 @@
         /* Layout Principale */
         .main-layout {
             position: relative;
-            z-index: 1000;
+            z-index: 10;
             height: 100vh;
             width: 100vw;
             display: flex;
@@ -76,12 +76,11 @@
             justify-content: center;
             width: 100%;
             height: 100%;
-            padding: 0 20px;
+            padding: 0 10px;
             pointer-events: none;
-            margin-top: -30px; /* Alza tutto il blocco centrale */
+            margin-top: -40px;
         }
 
-        /* Pannelli Laterali */
         .side-panel {
             width: 250px;
             height: 100%;
@@ -89,13 +88,14 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 40px;
-            pointer-events: auto !important;
+            gap: 25px;
+            pointer-events: auto;
             z-index: 999999;
         }
 
+        /* Scritta ITALIA Neon */
         .neon-italia {
-            font-size: 40px;
+            font-size: 38px;
             font-weight: 900;
             display: flex;
             gap: 5px;
@@ -109,7 +109,7 @@
 
         @keyframes neonBlink { from { opacity: 1; } to { opacity: 0.7; } }
 
-        /* Riquadro Centrale - MISURE RICHIESTE 847x675 */
+        /* Riquadro Centrale 847x675 */
         .neon-frame-wrapper {
             position: relative;
             width: 847px;
@@ -120,8 +120,8 @@
             justify-content: center;
             overflow: hidden;
             border-radius: 10px;
-            pointer-events: none;
             box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            pointer-events: none;
         }
 
         .neon-frame-wrapper::before {
@@ -146,70 +146,53 @@
             border-radius: 6px;
         }
 
-        /* Elementi Destra */
+        /* Pannello Orologio */
         .info-box {
             background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
+            padding: 15px;
             border-radius: 15px;
-            border: 2px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
             text-align: center;
-            min-width: 200px;
+            min-width: 180px;
         }
 
-        .clock { font-size: 38px; font-weight: bold; color: #4CAF50; }
-        .date { font-size: 18px; color: #FFEB3B; }
+        .clock { font-size: 32px; font-weight: bold; color: #4CAF50; }
+        .date { font-size: 15px; color: #FFEB3B; }
 
-        /* Player Radio */
-        .radio-player {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 20px;
-            border-radius: 25px;
-            border: 3px solid #00ffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 0 25px #00ffff;
-            cursor: pointer !important;
-            pointer-events: auto !important;
+        /* Pannello Meteo Italiano */
+        .weather-panel {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid #03A9F4;
+            text-align: center;
+            min-width: 180px;
+            box-shadow: 0 0 20px rgba(3, 169, 244, 0.3);
+            transition: all 0.5s ease;
         }
 
-        .radio-btn {
-            width: 60px;
-            height: 60px;
-            background: #00ffff;
-            border-radius: 50%;
-            border: none;
-            color: black;
-            font-size: 28px;
-            cursor: pointer !important;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .weather-city { font-size: 18px; font-weight: bold; color: #03A9F4; margin-bottom: 5px; text-transform: uppercase; }
+        .weather-temp { font-size: 28px; font-weight: bold; color: #fff; }
+        .weather-desc { font-size: 14px; color: #B0BEC5; font-style: italic; }
 
-        .radio-text { font-size: 12px; font-weight: bold; color: #00ffff; }
-
-        /* Bottoni Navigazione */
+        /* Bottoni */
         .nav-item {
-            padding: 12px 30px;
+            padding: 10px 20px;
             border-radius: 10px;
             background: linear-gradient(to right, #008C45, #FFFFFF, #CD212A);
             color: #000;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             border: 2px solid white;
             cursor: pointer !important;
-            pointer-events: auto !important;
             text-align: center;
-            width: 220px;
-            z-index: 999999;
+            width: 200px;
         }
 
         .signature {
             position: fixed;
-            bottom: 30px;
-            right: 25px;
+            bottom: 40px;
+            right: 20px;
             font-size: 12px;
             color: rgba(255, 255, 255, 0.4);
             z-index: 30;
@@ -227,10 +210,9 @@
                 <div class="neon-italia">
                     <span>ITA</span><span>L</span><span>IA</span>
                 </div>
-                <div class="nav-item" onclick="window.open('https://xat.com/italia', '_blank')">Lobby</div>
+                <div class="nav-item" onclick="window.top.location.href='https://xat.com/italia'">Lobby</div>
             </div>
             
-            <!-- Cornice Neon 847x675 -->
             <div class="neon-frame-wrapper">
                 <div class="frame-area"></div>
             </div>
@@ -241,15 +223,14 @@
                     <div id="date" class="date">Caricamento...</div>
                 </div>
                 
-                <div class="radio-player" id="radioContainer">
-                    <button class="radio-btn" id="playBtn">▶</button>
-                    <div class="radio-text">Dance Radio UK</div>
-                    <audio id="audioSource">
-                        <source src="https://boxstream.danceradiouk.com/stream/1/" type="audio/mpeg">
-                    </audio>
+                <!-- Widget Meteo -->
+                <div class="weather-panel" id="weatherBox">
+                    <div class="weather-city" id="city">Roma</div>
+                    <div class="weather-temp" id="temp">--°C</div>
+                    <div class="weather-desc" id="desc">Caricamento...</div>
                 </div>
 
-                <div class="nav-item" onclick="window.open('https://xat.com/italia', '_blank')">Aiuto Ufficiale</div>
+                <div class="nav-item" onclick="window.top.location.href='https://xat.com/italia'">Aiuto Ufficiale</div>
             </div>
         </div>
     </div>
@@ -258,50 +239,30 @@
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        const audio = document.getElementById('audioSource');
-        const playBtn = document.getElementById('playBtn');
-        const radioContainer = document.getElementById('radioContainer');
+        const cities = ['Rome', 'Naples', 'Milan', 'Florence', 'Messina', 'Cagliari'];
+        const cityLabels = {'Rome': 'Roma', 'Naples': 'Napoli', 'Milan': 'Milano', 'Florence': 'Firenze', 'Messina': 'Messina', 'Cagliari': 'Cagliari'};
+        let cityIndex = 0;
 
-        function toggleRadio() {
-            if (audio.paused) {
-                audio.play().then(() => {
-                    playBtn.textContent = '⏸';
-                }).catch(e => alert("Clicca di nuovo per attivare l'audio!"));
-            } else {
-                audio.pause();
-                playBtn.textContent = '▶';
+        async function updateWeather() {
+            const city = cities[cityIndex];
+            try {
+                const response = await fetch(`https://wttr.in/${city}?format=j1`);
+                const data = await response.json();
+                const temp = data.current_condition[0].temp_C;
+                const desc = data.current_condition[0].lang_it ? data.current_condition[0].lang_it[0].value : data.current_condition[0].weatherDesc[0].value;
+                
+                document.getElementById('city').textContent = cityLabels[city];
+                document.getElementById('temp').textContent = `${temp}°C`;
+                document.getElementById('desc').textContent = desc;
+                
+                cityIndex = (cityIndex + 1) % cities.length;
+            } catch (e) {
+                console.error("Errore meteo", e);
             }
         }
 
-        playBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleRadio(); });
-        radioContainer.addEventListener('click', toggleRadio);
-
-        const dayImages = ['https://images.unsplash.com/photo-1552832230-c0197dd3ef1b?w=1600', 'https://images.unsplash.com/photo-1541432901042-2dad8a167759?w=1600', 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1600'];
-        const nightImages = ['https://images.unsplash.com/photo-1512403714441-2a1f267672f7?w=1600', 'https://images.unsplash.com/photo-1520116468816-95b69f847357?w=1600', 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600'];
-
-        let currentSlide = 0;
-        let slides = [];
-
-        function initSlideshow() {
-            const hour = new Date().getHours();
-            const images = (hour >= 6 && hour < 20) ? dayImages : nightImages;
-            const container = document.getElementById('slideshow-container');
-            container.innerHTML = '';
-            slides = images.map((src, i) => {
-                const div = document.createElement('div');
-                div.className = 'slide' + (i === 0 ? ' active' : '');
-                div.style.backgroundImage = `url('${src}')`;
-                container.appendChild(div);
-                return div;
-            });
-        }
-
-        function rotateSlides() {
-            if (slides.length < 2) return;
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
+        setInterval(updateWeather, 10000); // Cambia città ogni 10 secondi
+        updateWeather();
 
         function updateTime() {
             const now = new Date();
@@ -309,10 +270,44 @@
             document.getElementById('date').textContent = now.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
         }
 
+        const dayImages = ['https://images.unsplash.com/photo-1552832230-c0197dd3ef1b?w=1600', 'https://images.unsplash.com/photo-1541432901042-2dad8a167759?w=1600', 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1600'];
+        const nightImages = ['https://images.unsplash.com/photo-1512403714441-2a1f267672f7?w=1600', 'https://images.unsplash.com/photo-1520116468816-95b69f847357?w=1600', 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600'];
+
+        function initSlideshow() {
+            const hour = new Date().getHours();
+            const images = (hour >= 6 && hour < 20) ? dayImages : nightImages;
+            const container = document.getElementById('slideshow-container');
+            container.innerHTML = '';
+            images.map((src, i) => {
+                const div = document.createElement('div');
+                div.className = 'slide' + (i === 0 ? ' active' : '');
+                div.style.backgroundImage = `url('${src}')`;
+                container.appendChild(div);
+            });
+        }
+
+        function rotateSlides() {
+            const slides = document.querySelectorAll('.slide');
+            let current = 0;
+            slides.forEach((s, i) => { if(s.classList.contains('active')) current = i; });
+            slides[current].classList.remove('active');
+            slides[(current + 1) % slides.length].classList.add('active');
+        }
+
         initSlideshow();
         setInterval(updateTime, 1000);
         setInterval(rotateSlides, 30000);
         updateTime();
+
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 40 },
+                "color": { "value": "#ffffff" },
+                "opacity": { "value": 0.3 },
+                "size": { "value": 2 },
+                "move": { "enable": true, "speed": 0.8, "direction": "top" }
+            }
+        });
     </script>
 </body>
 </html>
