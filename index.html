@@ -2,9 +2,9 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Chat Italia Xatframe - Animated Signature</title>
+    <title>Chat Italia Xatframe - Final Build</title>
     <style>
-        /* Protezione globale */
+        /* Protezione copia */
         * {
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -15,7 +15,7 @@
 
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: white; }
 
-        /* Sfondi Slideshow */
+        /* Sfondi */
         #slideshow-container {
             position: fixed;
             top: 0;
@@ -60,7 +60,7 @@
         /* Layout Principale */
         .main-layout {
             position: relative;
-            z-index: 10;
+            z-index: 1000;
             height: 100vh;
             width: 100vw;
             display: flex;
@@ -73,14 +73,15 @@
         .middle-container {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             width: 100%;
             height: 100%;
-            padding: 0 10px;
+            padding: 0 40px;
             pointer-events: none;
-            margin-top: -40px;
+            margin-top: -30px;
         }
 
+        /* Pannelli Laterali */
         .side-panel {
             width: 250px;
             height: 100%;
@@ -88,14 +89,13 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 25px;
-            pointer-events: auto;
+            gap: 40px;
+            pointer-events: auto !important;
             z-index: 999999;
         }
 
-        /* Scritta ITALIA Neon */
         .neon-italia {
-            font-size: 38px;
+            font-size: 40px;
             font-weight: 900;
             display: flex;
             gap: 5px;
@@ -120,7 +120,6 @@
             justify-content: center;
             overflow: hidden;
             border-radius: 10px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.8);
             pointer-events: none;
         }
 
@@ -139,25 +138,25 @@
             position: relative;
             width: 100%;
             height: 100%;
-            background-image: url('https://static.prod-images.emergentagent.com/jobs/b9e94177-ba94-422e-bb3b-a4ae806ae70d/images/fe8f8eb592a7e4f5d26f179c24e6800c378e7225fa6beffb7d9ffed6ef81b8cc.png');
+            background-image: url('https://xatimg.com/image/Cl2N4BF0UMl5.jpg');
             background-size: cover;
             background-position: center;
             z-index: 5;
             border-radius: 6px;
         }
 
-        /* Pannello Orologio */
+        /* Elementi Destra */
         .info-box {
             background: rgba(0, 0, 0, 0.8);
-            padding: 15px;
+            padding: 20px;
             border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.2);
             text-align: center;
-            min-width: 180px;
+            min-width: 200px;
         }
 
-        .clock { font-size: 32px; font-weight: bold; color: #4CAF50; }
-        .date { font-size: 15px; color: #FFEB3B; }
+        .clock { font-size: 38px; font-weight: bold; color: #4CAF50; }
+        .date { font-size: 18px; color: #FFEB3B; }
 
         /* Widget Meteo */
         .weather-panel {
@@ -176,23 +175,24 @@
 
         /* Bottoni */
         .nav-item {
-            padding: 10px 20px;
+            padding: 12px 30px;
             border-radius: 10px;
             background: linear-gradient(to right, #008C45, #FFFFFF, #CD212A);
             color: #000;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             border: 2px solid white;
             cursor: pointer !important;
+            pointer-events: auto !important;
             text-align: center;
-            width: 200px;
+            width: 220px;
         }
 
         /* Firma Animata Tricolore */
         .signature {
             position: fixed;
-            bottom: 80px; /* Spostata più in alto */
-            right: 20px;
+            bottom: 100px; /* Alzata di qualche centimetro */
+            right: 25px;
             font-size: 16px;
             font-weight: bold;
             z-index: 30;
@@ -213,7 +213,7 @@
 
         @keyframes typing {
             0% { width: 0; }
-            50% { width: 170px; } /* Lunghezza della scritta */
+            50% { width: 170px; }
             100% { width: 0; }
         }
 
@@ -234,7 +234,7 @@
                 <div class="neon-italia">
                     <span>ITA</span><span>L</span><span>IA</span>
                 </div>
-                <div class="nav-item" onclick="window.top.location.href='https://xat.com/italia'">Lobby</div>
+                <div class="nav-item" onclick="window.open('https://xat.com/italia', '_blank')">Lobby</div>
             </div>
             
             <div class="neon-frame-wrapper">
@@ -253,12 +253,11 @@
                     <div class="weather-desc" id="desc">Caricamento...</div>
                 </div>
 
-                <div class="nav-item" onclick="window.top.location.href='https://xat.com/italia'">Aiuto Ufficiale</div>
+                <div class="nav-item" onclick="window.open('https://xat.com/italia', '_blank')">Aiuto Ufficiale</div>
             </div>
         </div>
     </div>
 
-    <!-- Nuova firma animata -->
     <div class="signature"><span>Created by xDany81</span></div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
@@ -278,9 +277,7 @@
                 document.getElementById('temp').textContent = `${temp}°C`;
                 document.getElementById('desc').textContent = desc;
                 cityIndex = (cityIndex + 1) % cities.length;
-            } catch (e) {
-                console.error("Errore meteo", e);
-            }
+            } catch (e) { console.error("Meteo error", e); }
         }
 
         setInterval(updateWeather, 10000);
@@ -292,8 +289,12 @@
             document.getElementById('date').textContent = now.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
         }
 
-        const dayImages = ['https://images.unsplash.com/photo-1552832230-c0197dd3ef1b?w=1600', 'https://images.unsplash.com/photo-1541432901042-2dad8a167759?w=1600', 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1600'];
-        const nightImages = ['https://images.unsplash.com/photo-1512403714441-2a1f267672f7?w=1600', 'https://images.unsplash.com/photo-1520116468816-95b69f847357?w=1600', 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600'];
+        const dayImages = [
+            'https://xatimg.com/image/Cl2N4BF0UMl5.jpg',
+            'https://images.unsplash.com/photo-1552832230-c0197dd3ef1b?w=1600',
+            'https://images.unsplash.com/photo-1541432901042-2dad8a167759?w=1600'
+        ];
+        const nightImages = ['https://images.unsplash.com/photo-1512403714441-2a1f267672f7?w=1600', 'https://images.unsplash.com/photo-1520116468816-95b69f847357?w=1600'];
 
         function initSlideshow() {
             const hour = new Date().getHours();
