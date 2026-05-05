@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Chat Italia Xatframe - Second Slide Update</title>
+    <title>Chat Italia Xatframe - Update Pro</title>
     <style>
         /* Protezione copia */
         * {
@@ -81,7 +81,7 @@
             margin-top: -30px;
         }
 
-        /* Pannelli Laterali */
+        /* Pannelli Laterali ATTIVI */
         .side-panel {
             width: 250px;
             height: 100%;
@@ -94,20 +94,25 @@
             z-index: 999999;
         }
 
+        /* Scritta ITALIA Neon Lampeggiante */
         .neon-italia {
             font-size: 40px;
             font-weight: 900;
             display: flex;
             gap: 5px;
             text-transform: uppercase;
-            animation: neonBlink 1.5s infinite alternate;
+            animation: neonFlash 1s steps(2, start) infinite; /* Lampeggio più netto */
         }
 
-        .neon-italia span:nth-child(1) { color: #008C45; text-shadow: 0 0 15px #008C45; }
-        .neon-italia span:nth-child(2) { color: #FFFFFF; text-shadow: 0 0 15px #FFFFFF; }
-        .neon-italia span:nth-child(3) { color: #CD212A; text-shadow: 0 0 15px #CD212A; }
+        .neon-italia span:nth-child(1) { color: #008C45; text-shadow: 0 0 15px #008C45, 0 0 30px #008C45; }
+        .neon-italia span:nth-child(2) { color: #FFFFFF; text-shadow: 0 0 15px #FFFFFF, 0 0 30px #FFFFFF; }
+        .neon-italia span:nth-child(3) { color: #CD212A; text-shadow: 0 0 15px #CD212A, 0 0 30px #CD212A; }
 
-        @keyframes neonBlink { from { opacity: 1; } to { opacity: 0.7; } }
+        @keyframes neonFlash {
+            0% { opacity: 1; filter: brightness(1.5); }
+            50% { opacity: 0.3; filter: brightness(0.5); }
+            100% { opacity: 1; filter: brightness(1.5); }
+        }
 
         /* Riquadro Centrale 847x675 */
         .neon-frame-wrapper {
@@ -138,7 +143,7 @@
             position: relative;
             width: 100%;
             height: 100%;
-            background-image: url('https://xatimg.com/image/ab3gnYjzL1c6.png');
+            background-image: url('https://static.prod-images.emergentagent.com/jobs/b9e94177-ba94-422e-bb3b-a4ae806ae70d/images/fe8f8eb592a7e4f5d26f179c24e6800c378e7225fa6beffb7d9ffed6ef81b8cc.png');
             background-size: cover;
             background-position: center;
             z-index: 5;
@@ -150,7 +155,7 @@
             background: rgba(0, 0, 0, 0.8);
             padding: 20px;
             border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.2);
             text-align: center;
             min-width: 200px;
         }
@@ -187,9 +192,9 @@
             text-align: center;
             width: 220px;
             z-index: 999999;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
         }
 
-        /* Firma Animata Tricolore */
         .signature {
             position: fixed;
             bottom: 100px;
@@ -212,16 +217,8 @@
             display: inline-block;
         }
 
-        @keyframes typing {
-            0% { width: 0; }
-            50% { width: 170px; }
-            100% { width: 0; }
-        }
-
-        @keyframes blinkCursor {
-            from { border-color: transparent; }
-            to { border-color: white; }
-        }
+        @keyframes typing { 0% { width: 0; } 50% { width: 170px; } 100% { width: 0; } }
+        @keyframes blinkCursor { from { border-color: transparent; } to { border-color: white; } }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -235,7 +232,7 @@
                 <div class="neon-italia">
                     <span>ITA</span><span>L</span><span>IA</span>
                 </div>
-                <div class="nav-item" onclick="window.open('https://xat.com/italia', '_blank')">Lobby</div>
+                <div class="nav-item" onclick="window.top.location.href='https://xat.com/italia'">Lobby</div>
             </div>
             
             <div class="neon-frame-wrapper">
@@ -254,7 +251,7 @@
                     <div class="weather-desc" id="desc">Caricamento...</div>
                 </div>
 
-                <div class="nav-item" onclick="window.open('https://xat.com/italia', '_blank')">Aiuto Ufficiale</div>
+                <div class="nav-item" onclick="window.top.location.href='https://xat.com/italia'">Aiuto Ufficiale</div>
             </div>
         </div>
     </div>
@@ -290,19 +287,20 @@
             document.getElementById('date').textContent = now.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
         }
 
-        const dayImages = [
+        // Tutte le tue foto caricate
+        const slideImages = [
             'https://xatimg.com/image/Cl2N4BF0UMl5.jpg',
             'https://xatimg.com/image/ab3gnYjzL1c6.png',
-            'https://images.unsplash.com/photo-1552832230-c0197dd3ef1b?w=1600'
+            'https://xatimg.com/image/DPul54EmaEI0.jpg',
+            'https://xatimg.com/image/aAxqCrakxV2p.jpg',
+            'https://xatimg.com/image/EUgXK1NEFyhY.jpg',
+            'https://xatimg.com/image/NfOPNQLoKdXi.jpg'
         ];
-        const nightImages = ['https://images.unsplash.com/photo-1512403714441-2a1f267672f7?w=1600', 'https://images.unsplash.com/photo-1520116468816-95b69f847357?w=1600'];
 
         function initSlideshow() {
-            const hour = new Date().getHours();
-            const images = (hour >= 6 && hour < 20) ? dayImages : nightImages;
             const container = document.getElementById('slideshow-container');
             container.innerHTML = '';
-            images.map((src, i) => {
+            slideImages.map((src, i) => {
                 const div = document.createElement('div');
                 div.className = 'slide' + (i === 0 ? ' active' : '');
                 div.style.backgroundImage = `url('${src}')`;
